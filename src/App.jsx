@@ -6,6 +6,12 @@ import './App.css';
 class App extends Component {
   state = { 
     todo: [
+      {
+        text: '1 Task Complete',
+        completed: true,
+        date:new Date(),
+        edit:false
+      }
     ]
   }
 
@@ -41,6 +47,13 @@ class App extends Component {
     this.setState({todo:edited})
   }
 
+  completed = (i) => {
+    const edited = this.state.todo
+    edited[i].completed = !edited[i].completed
+
+    this.setState({todo:edited})
+  }
+
   render() {
     return (
       <div className="App">
@@ -50,6 +63,7 @@ class App extends Component {
           add={this.add} 
           remove={this.remove}
           edit={this.handleEdit}
+          complete={this.completed}
         />
       </div>
     );

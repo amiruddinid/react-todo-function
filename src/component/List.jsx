@@ -20,10 +20,19 @@ export default class List extends Component {
                         <li>
                             {
                                 !el.edit ? 
-                                    <>
+                                    el.completed ? 
+                                    <s>
                                         {el.text} 
                                         <span onClick={() => this.props.remove(i)}>X</span> 
                                         <span onClick={() => this.handleEdit(el.text, i)}>Edit</span>
+                                        <span onClick={() => this.handleEdit(el.text, i)}>Complete</span> 
+                                    </s>
+                                    :
+                                    <>
+                                        {el.text} 
+                                        <span onClick={() => this.props.remove(i)}>X</span>  
+                                        <span onClick={() => this.handleEdit(el.text, i)}>Edit</span> 
+                                        <span onClick={() => this.props.complete(i)}>Complete</span> 
                                     </>
                                 :
                                     <>

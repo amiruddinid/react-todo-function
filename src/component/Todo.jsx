@@ -15,7 +15,9 @@ export default class Todo extends Component {
         <List 
           todo={this.props.todo} 
           remove={this.props.remove} 
-          edit={this.props.edit} />
+          edit={this.props.edit}
+          complete={this.props.complete}
+        />
       </div>
     )
   }
