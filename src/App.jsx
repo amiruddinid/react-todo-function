@@ -4,22 +4,13 @@ import Todo from './component/Todo';
 import './App.css';
 
 class App extends Component {
-  state ={ 
+  state = { 
     todo: [
-      {
-        text: 'Todo 1',
-        completed: false,
-        date:new Date(),
-      },
-      {
-        text: 'Todo 2',
-        completed: false,
-        date:new Date(),
-      }
     ]
   }
 
-  add = (value) => {
+  add = (value, date) => {
+    console.log(value)
     this.setState({
       todo:[
         ...this.state.todo,
@@ -27,17 +18,39 @@ class App extends Component {
           text: value,
           completed: false,
           date:new Date(),
+          edit:false
         }
       ]
     })
-    console.log(this.todo)
+  }
+
+  remove = (i) => {
+    let newTodo = this.state.todo;
+    newTodo.splice(i, 1);
+    this.setState({todo:newTodo})
+  }
+
+  handleEdit = (val, i) => {
+    const edited = this.state.todo
+    if(val === null){
+      edited[i].edit = true
+    }else{
+      edited[i].edit = false
+      edited[i].text = val
+    }
+    this.setState({todo:edited})
   }
 
   render() {
     return (
       <div className="App">
         <Header />
-        <Todo todo={this.state.todo} add={this.add}/>
+        <Todo 
+          todo={this.state.todo}  
+          add={this.add} 
+          remove={this.remove}
+          edit={this.handleEdit}
+        />
       </div>
     );
   }

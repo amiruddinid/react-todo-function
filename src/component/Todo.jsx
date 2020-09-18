@@ -3,17 +3,19 @@ import List from './List'
 
 export default class Todo extends Component {
   state = {
-    value : ""
+    value : "",
+    date: "",
   }
-  submit(){
-    this.props.add(this.state.value)
-  }
+
   render() {
     return (
       <div>
         <input type="text" onChange={(e) => this.setState({ value : e.target.value}) }/>
-        <button type="button" onClick={() => this.submit()}>Add</button>
-        <List todo={this.props.todo} />
+        <button type="button" onClick={() => this.props.add(this.state.value)}>Add</button>
+        <List 
+          todo={this.props.todo} 
+          remove={this.props.remove} 
+          edit={this.props.edit} />
       </div>
     )
   }
