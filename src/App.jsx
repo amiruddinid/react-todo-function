@@ -15,6 +15,14 @@ class App extends Component {
     ]
   }
 
+  componentDidMount(){
+    console.log('i am mounting', this.state.todo);
+  }
+
+  componentDidUpdate(){
+    console.log('i am updating', this.state.todo);
+  }
+
   add = (value, date) => {
     console.log(value)
     this.setState({

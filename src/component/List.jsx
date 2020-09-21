@@ -19,19 +19,11 @@ export default class List extends Component {
                     this.props.todo.map((el, i) => (
                         <li>
                             {
-                                !el.edit ? 
-                                    el.completed ? 
-                                    <s>
-                                        {el.text} 
+                                !el.edit ?
+                                    <>
+                                        {el.completed ? <s>{el.text}</s> : el.text}
                                         <span onClick={() => this.props.remove(i)}>X</span> 
                                         <span onClick={() => this.handleEdit(el.text, i)}>Edit</span>
-                                        <span onClick={() => this.handleEdit(el.text, i)}>Complete</span> 
-                                    </s>
-                                    :
-                                    <>
-                                        {el.text} 
-                                        <span onClick={() => this.props.remove(i)}>X</span>  
-                                        <span onClick={() => this.handleEdit(el.text, i)}>Edit</span> 
                                         <span onClick={() => this.props.complete(i)}>Complete</span> 
                                     </>
                                 :
