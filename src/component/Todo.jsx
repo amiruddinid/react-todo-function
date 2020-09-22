@@ -6,13 +6,13 @@ export default class Todo extends Component {
     super(props)
     this.state = {
       value : this.props.value,
-      date: "",
     }
   }
 
   render() {
     return (
       <div className="Todo">
+        {this.props.children}
         <input type="text" onChange={(e) => this.setState({ value : e.target.value}) }/>
         <button type="button" onClick={() => this.props.add(this.state.value)}>Add</button>
         <button type="button" onClick={() => this.props.completeAll()}>Complete All</button>

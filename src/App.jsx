@@ -98,7 +98,9 @@ class App extends Component {
           edit={this.handleEdit}
           complete={this.completed}
           completeAll = {this.completedAll}
-        />
+        >
+          <h2>Todo from App.jsx</h2>
+        </Todo>
         
         <Router>
           <ul>
