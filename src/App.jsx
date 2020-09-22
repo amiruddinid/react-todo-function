@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 import Header from './component/Header';
 import Todo from './component/Todo';
+import Detail from './pages/Detail';
+import About from './pages/About';
+import Home from './pages/Home';
 import './App.css';
 
-let t1,t2 = 0;
 class App extends Component {
   constructor(){
     super()
@@ -17,7 +25,6 @@ class App extends Component {
         }
       ]
     }
-    t1 = performance.now()
   }
 
   componentDidMount(){
@@ -30,8 +37,7 @@ class App extends Component {
     localStorage.setItem('todos', JSON.stringify(this.state.todo));
   }
 
-  add = (value, date) => {
-    console.log(value)
+  add = (value) => {
     this.setState({
       todo:[
         ...this.state.todo,
@@ -43,7 +49,6 @@ class App extends Component {
         }
       ]
     })
-    /// localStorage setItem
   }
 
   remove = (i) => {
@@ -72,17 +77,35 @@ class App extends Component {
   }
 
   render() {
-    console.log({ fromMounting : performance.now() - t1 + 'ms', fromDidMount : performance.now() - t2 + 'ms' })
     return (
       <div className="App">
         <Header />
-        <Todo 
+        <Todo
           todo={this.state.todo}  
           add={this.add} 
           remove={this.remove}
           edit={this.handleEdit}
           complete={this.completed}
         />
+        
+        <Router>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/detail">Detail</Link></li>
+          </ul>
+          <Switch>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/detail">
+              <Detail />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     );
   }
