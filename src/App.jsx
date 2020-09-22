@@ -3,24 +3,31 @@ import Header from './component/Header';
 import Todo from './component/Todo';
 import './App.css';
 
+let t1,t2 = 0;
 class App extends Component {
-  state = { 
-    todo: [
-      {
-        text: '1 Task Complete',
-        completed: true,
-        date:new Date(),
-        edit:false
-      }
-    ]
+  constructor(){
+    super()
+    this.state = { 
+      todo: [
+        {
+          text: '1 Task Complete',
+          completed: true,
+          date:new Date(),
+          edit:false
+        }
+      ]
+    }
+    t1 = performance.now()
   }
 
   componentDidMount(){
-    console.log('i am mounting', this.state.todo);
+    if(JSON.parse(localStorage.getItem('todos'))){
+      this.setState({todo:JSON.parse(localStorage.getItem('todos'))});
+    }
   }
 
   componentDidUpdate(){
-    console.log('i am updating', this.state.todo);
+    localStorage.setItem('todos', JSON.stringify(this.state.todo));
   }
 
   add = (value, date) => {
@@ -36,12 +43,14 @@ class App extends Component {
         }
       ]
     })
+    /// localStorage setItem
   }
 
   remove = (i) => {
     let newTodo = this.state.todo;
     newTodo.splice(i, 1);
     this.setState({todo:newTodo})
+    // localStorage setItem
   }
 
   handleEdit = (val, i) => {
@@ -63,6 +72,7 @@ class App extends Component {
   }
 
   render() {
+    console.log({ fromMounting : performance.now() - t1 + 'ms', fromDidMount : performance.now() - t2 + 'ms' })
     return (
       <div className="App">
         <Header />
