@@ -15,6 +15,7 @@ export default class Todo extends Component {
       <div className="Todo">
         <input type="text" onChange={(e) => this.setState({ value : e.target.value}) }/>
         <button type="button" onClick={() => this.props.add(this.state.value)}>Add</button>
+        <button type="button" onClick={() => this.props.completeAll()}>Complete All</button>
         <List 
           todo={this.props.todo} 
           remove={this.props.remove} 

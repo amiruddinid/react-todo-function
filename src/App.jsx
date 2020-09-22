@@ -76,6 +76,17 @@ class App extends Component {
     this.setState({todo:edited})
   }
 
+  completedAll = () => {
+    const task = this.state.todo.map(el => {
+      return el = {
+        ...el,
+        completed : true
+      }
+    })
+    console.log(task)
+    this.setState({todo:task})
+  }
+
   render() {
     return (
       <div className="App">
@@ -86,6 +97,7 @@ class App extends Component {
           remove={this.remove}
           edit={this.handleEdit}
           complete={this.completed}
+          completeAll = {this.completedAll}
         />
         
         <Router>
