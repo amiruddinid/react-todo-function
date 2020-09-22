@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
 } from "react-router-dom";
+
 import Header from './component/Header';
 import Todo from './component/Todo';
-import Detail from './pages/Detail';
-import About from './pages/About';
 import Home from './pages/Home';
+import About from './pages/About';
+import Detail from './pages/Detail';
 import './App.css';
 
 class App extends Component {
@@ -101,18 +102,24 @@ class App extends Component {
         >
           <h2>Todo from App.jsx</h2>
         </Todo>
-        
         <Router>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/detail">Detail</Link></li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/detail">Detail</Link>
+            </li>
           </ul>
+
           <Switch>
-            <Route path="/about">
+            <Route path="/about/:a">
               <About />
             </Route>
-            <Route path="/detail">
+            <Route path="/detail/:id">
               <Detail />
             </Route>
             <Route path="/">

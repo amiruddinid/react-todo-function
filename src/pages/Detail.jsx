@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import {withRouter} from 'react-router-dom';
 
-export default class Detail extends Component {
+class Detail extends Component {
     render() {
         return (
             <div>
-                <h1>Detail</h1>
+                <h1>Detail {this.props.match.params.id}</h1>
             </div>
         )
     }
 }
+export default withRouter(Detail);
