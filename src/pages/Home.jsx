@@ -12,7 +12,7 @@ export default class Home extends Component {
                return res.json()
             })
             .then((res) => {
-                if(!res.result){
+                if(!res.results){
                     throw Error('Error: Data not found')
                 }
                 this.setState({
