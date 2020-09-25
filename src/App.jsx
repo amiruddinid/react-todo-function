@@ -17,14 +17,9 @@ class App extends Component {
   constructor(){
     super()
     this.state = { 
-      todo: [
-        {
-          text: '1 Task Complete',
-          completed: true,
-          date:new Date(),
-          edit:false
-        }
-      ]
+      todo: [],
+      filteredTodo:[],
+      image:'/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg'
     }
   }
 
@@ -88,6 +83,17 @@ class App extends Component {
     this.setState({todo:task})
   }
 
+  filter = (filterby) =>{
+    let filtered = []
+    if(filterby === "completed"){
+      filtered = this.state.todo.filter(() => {}); //filter disini
+    }else if(filterby === "not complete"){
+      filtered = this.state.todo.filter(() => {}); 
+    }
+    this.setState({filteredTodo:filtered});
+    //kalo sudah di filter tampilin state filteredTodo bukan todo
+  }
+
   render() {
     return (
       <div className="App">
@@ -101,6 +107,7 @@ class App extends Component {
           completeAll = {this.completedAll}
         >
           <h2>Todo from App.jsx</h2>
+          <img src={"https://image.tmdb.org/t/p/original" + this.state.image} alt="img"/>
         </Todo>
         <Router>
           <ul>
