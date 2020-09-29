@@ -11,6 +11,7 @@ import Todo from './component/Todo';
 import Home from './pages/Home';
 import About from './pages/About';
 import Detail from './pages/Detail';
+import Login from './pages/Login';
 import './App.css';
 
 class App extends Component {
@@ -120,6 +121,9 @@ class App extends Component {
             <li>
               <Link to="/detail">Detail</Link>
             </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
           </ul>
 
           <Switch>
@@ -129,6 +133,7 @@ class App extends Component {
             <Route path="/detail/:id">
               <Detail />
             </Route>
+            <Route path="/login" component={Login} />
             <Route path="/">
               <Home />
             </Route>
