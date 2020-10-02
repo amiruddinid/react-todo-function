@@ -7,26 +7,24 @@ export default class Home extends Component {
         token: localStorage.getItem('token')
     }
 
-    
-
     componentDidMount(){
         console.log(this.state)
         if(this.state.isLogin){
             fetch('http://appdoto.herokuapp.com/api/todo',{
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': this.state.token
-                    },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.state.token
+                },
+            })
+            .then((res, err) => {
+                return res.json()
+            })
+            .then((res) => {
+                this.setState({
+                    todo:res.data
                 })
-                .then((res, err) => {
-                    return res.json()
-                })
-                .then((res) => {
-                    this.setState({
-                        todo:res.data
-                    })
-                })
-                .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
         }
     }
     
@@ -36,8 +34,9 @@ export default class Home extends Component {
 
     logout = (e) => {
         localStorage.removeItem('token')
-        localStorage.setItem('isLogin', false)
+        localStorage.removeItem('isLogin')
         this.setState({
+            todo:[],
             isLogin:false,
             token: ''
         })

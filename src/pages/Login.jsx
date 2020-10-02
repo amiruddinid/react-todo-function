@@ -13,14 +13,12 @@ class Login extends Component{
 
     submit(e){
         e.preventDefault();
-        
-        let data = this.state
         fetch('http://appdoto.herokuapp.com/api/users/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+            headers:{
+                'Content-Type':'application/json'
             },
-            body: JSON.stringify(data)
+            body:JSON.stringify(this.state)
         })
         .then(res => res.json())
         .then(result => {

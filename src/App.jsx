@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,109 +6,103 @@ import {
   Link
 } from "react-router-dom";
 
-import Header from './component/Header';
+import Header from './component/Header/Header';
 import Todo from './component/Todo';
 import Home from './pages/Home';
-import About from './pages/About';
+import About from './pages/About/About';
 import Detail from './pages/Detail';
 import Login from './pages/Login';
 import './App.css';
 
-class App extends Component {
-  constructor(){
-    super()
-    this.state = { 
-      todo: [],
-      filteredTodo:[],
-      image:'/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg'
-    }
-  }
-
-  componentDidMount(){
+export default function App() {
+  const [todo, setTodo] = useState([])
+  const [filteredTodo, setFilteredTodo] = useState([])
+  const [image] = useState('/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg')
+  
+  useEffect(() => {
     if(JSON.parse(localStorage.getItem('todos'))){
-      this.setState({todo:JSON.parse(localStorage.getItem('todos'))});
+      setTodo(JSON.parse(localStorage.getItem('todos')))
     }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todo));
+  }, [todo])
+
+  const add = (value) => {
+    // setState({
+    //   todo:[...this.state.todo, {text:value}]
+    // })
+    setTodo([
+      ...todo,
+      {
+        text: value,
+        completed: false,
+        date:new Date(),
+        edit:false
+      }
+    ])
   }
 
-  componentDidUpdate(){
-    localStorage.setItem('todos', JSON.stringify(this.state.todo));
-  }
-
-  add = (value) => {
-    this.setState({
-      todo:[
-        ...this.state.todo,
-        {
-          text: value,
-          completed: false,
-          date:new Date(),
-          edit:false
-        }
-      ]
-    })
-  }
-
-  remove = (i) => {
-    let newTodo = this.state.todo;
+  const remove = (i) => {
+    let newTodo = [...todo];
     newTodo.splice(i, 1);
-    this.setState({todo:newTodo})
+    setTodo(newTodo)
     // localStorage setItem
   }
 
-  handleEdit = (val, i) => {
-    const edited = this.state.todo
+  const handleEdit = (val, i) => {
+    const edited = [...todo]
     if(val === null){
       edited[i].edit = true
     }else{
       edited[i].edit = false
       edited[i].text = val
     }
-    this.setState({todo:edited})
+    setTodo(edited)
   }
 
-  completed = (i) => {
-    const edited = this.state.todo
+  const completed = (i) => {
+    const edited = [...todo]
     edited[i].completed = !edited[i].completed
 
-    this.setState({todo:edited})
+    setTodo(edited)
   }
 
-  completedAll = () => {
-    const task = this.state.todo.map(el => {
+  const completedAll = () => {
+    const task = todo.map(el => {
       return el = {
         ...el,
         completed : true
       }
     })
-    console.log(task)
-    this.setState({todo:task})
+    setTodo(task)
   }
 
-  filter = (filterby) =>{
+  const filter = (filterby) =>{
     let filtered = []
     if(filterby === "completed"){
-      filtered = this.state.todo.filter(() => {}); //filter disini
+      filtered = todo.filter(() => {}); //filter disini
     }else if(filterby === "not complete"){
-      filtered = this.state.todo.filter(() => {}); 
+      filtered = todo.filter(() => {}); 
     }
-    this.setState({filteredTodo:filtered});
+    setFilteredTodo(filtered);
     //kalo sudah di filter tampilin state filteredTodo bukan todo
   }
-
-  render() {
-    return (
-      <div className="App">
+  
+  return (
+    <div className="App">
         <Header />
         <Todo
-          todo={this.state.todo}  
-          add={this.add} 
-          remove={this.remove}
-          edit={this.handleEdit}
-          complete={this.completed}
-          completeAll = {this.completedAll}
+          todo={todo}  
+          add={add} 
+          remove={remove}
+          edit={handleEdit}
+          complete={completed}
+          completeAll={completedAll}
         >
           <h2>Todo from App.jsx</h2>
-          <img src={"https://image.tmdb.org/t/p/original" + this.state.image} alt="img"/>
+          <img src={"https://image.tmdb.org/t/p/original" + image} alt="img"/>
         </Todo>
         <Router>
           <ul>
@@ -140,8 +134,5 @@ class App extends Component {
           </Switch>
         </Router>
       </div>
-    );
-  }
+  )
 }
-
-export default App;
